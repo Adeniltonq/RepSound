@@ -1,6 +1,6 @@
 # RepSound
 
-Reprodutor de música **local** para Android, feito em Flutter. Rápido, minimalista e pensado para bibliotecas grandes em armazenamento interno **e cartão microSD**.
+Reprodutor de música **local** para Android, feito em Flutter. Rápido, minimalista e pensado para bibliotecas grandes. Sua música, do seu jeito — sem depender de internet.
 
 Sem conta, sem login, sem anúncios. Tudo fica no aparelho — o backup é um arquivo JSON/CSV que você compartilha pelo menu do sistema (Drive, Nextcloud, Dropbox, e-mail…).
 
@@ -17,7 +17,7 @@ Instale com “instalar de fontes desconhecidas” permitido para o app de arqui
 ## Recursos
 
 ### Biblioteca
-- Leitura do **MediaStore por volume externo** (`MediaStore.getExternalVolumeNames`), o que cobre armazenamento interno e microSD de verdade — inclusive em aparelhos com mais de um volume.
+- Leitura da biblioteca pelo **MediaStore do Android**, com metadados, capas e caminhos dos arquivos de áudio.
 - Índice persistido em `library_index.json`: abrir o app **não dispara uma nova varredura**.
 - Varredura manual (pull-to-refresh, botão de atualizar ou Ajustes).
 - Busca instantânea por **título, artista, álbum e pasta**, sem diferenciar acentos ou caixa, com *debounce* de 200 ms.
@@ -141,7 +141,7 @@ lib/
 | Método | Retorno |
 | --- | --- |
 | `isSupported` | `true` no Android |
-| `querySongs` | lista de mapas com metadados de todos os volumes externos |
+| `querySongs` | lista de mapas com metadados de todas as faixas |
 | `queryArtwork` | bytes PNG da capa, ou `null` |
 
 A leitura de metadados roda em um executor dedicado; o Flutter recebe só o necessário e pede capas uma a uma.

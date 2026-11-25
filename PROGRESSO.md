@@ -12,7 +12,9 @@
 | README + licença | ✅ PolyForm Noncommercial 1.0.0 |
 | Validação no aparelho | ⏳ Pendente — Galaxy M51 saiu do `adb` |
 | Screenshots | ⏳ Pendente — precisa do aparelho |
-| GitHub (push + release) | ✅ Feito nesta rodada |
+| GitHub (push + release) | ✅ <https://github.com/Adeniltonq/RepSound/releases/tag/v1.0.0> |
+
+APK publicado: `RepSound-1.0.0-arm64.apk` (20,7 MB, arm64-v8a).
 
 ## Etapas concluídas
 

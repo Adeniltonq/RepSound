@@ -318,8 +318,8 @@ class _ApplyStylesSheetState extends State<_ApplyStylesSheet> {
                                 songs: widget.songs,
                                 target: _target,
                               );
-                              Navigator.of(context).pop();
                               showAppSnack(context, 'Estilos atualizados.');
+                              Navigator.of(context).pop();
                             },
                       child: const Text('Aplicar'),
                     ),
@@ -403,8 +403,8 @@ class _BulkPlaylistSheet extends StatelessWidget {
                 if (playlist == null) return;
                 final added = profile.addSongs(playlist.id, songs);
                 if (!context.mounted) return;
-                Navigator.of(context).pop();
                 showAppSnack(context, '$added faixa(s) adicionada(s).');
+                Navigator.of(context).pop();
               },
             ),
             const Divider(),
@@ -434,13 +434,13 @@ class _BulkPlaylistSheet extends StatelessWidget {
                       trailing: const Icon(Icons.add_rounded),
                       onTap: () {
                         final added = profile.addSongs(playlist.id, songs);
-                        Navigator.of(context).pop();
                         showAppSnack(
                           context,
                           added > 0
                               ? '$added faixa(s) adicionada(s) a ${playlist.name}.'
                               : 'As faixas já estavam em ${playlist.name}.',
                         );
+                        Navigator.of(context).pop();
                       },
                     );
                   },
