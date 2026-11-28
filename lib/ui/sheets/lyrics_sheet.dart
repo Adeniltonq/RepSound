@@ -27,11 +27,20 @@ class _LyricsSheet extends StatefulWidget {
 class _LyricsSheetState extends State<_LyricsSheet> {
   Lyrics? _lyrics;
   bool _loading = true;
+  final ScrollController _scroll = ScrollController();
+  final List<GlobalKey> _lineKeys = <GlobalKey>[];
+  int _lastActive = -1;
 
   @override
   void initState() {
     super.initState();
     _load();
+  }
+
+  @override
+  void dispose() {
+    _scroll.dispose();
+    super.dispose();
   }
 
   Future<void> _load({bool refresh = false}) async {
@@ -41,6 +50,35 @@ class _LyricsSheetState extends State<_LyricsSheet> {
     setState(() {
       _lyrics = lyrics;
       _loading = false;
+      _lineKeys.clear();
+      _lastActive = -1;
+    });
+  }
+
+  /// Mantém a linha ativa visível, sem brigar com a rolagem manual.
+  void _followActive(int active) {
+    if (active == _lastActive) return;
+    _lastActive = active;
+    if (active < 0) return;
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted || !_scroll.hasClients) return;
+      final context = active < _lineKeys.length
+          ? _lineKeys[active].currentContext
+          : null;
+      if (context != null) {
+        Scrollable.ensureVisible(
+          context,
+          alignment: 0.42,
+          duration: const Duration(milliseconds: 260),
+          curve: Curves.easeOutCubic,
+        );
+      } else {
+        final target = (active * 54.0).clamp(
+          0.0,
+          _scroll.position.maxScrollExtent,
+        );
+        _scroll.jumpTo(target);
+      }
     });
   }
 
@@ -128,7 +166,9 @@ class _LyricsSheetState extends State<_LyricsSheet> {
                               lyrics,
                               position,
                             );
+                            _followActive(active);
                             return ListView.builder(
+                              controller: _scroll,
                               padding: const EdgeInsets.fromLTRB(
                                 24,
                                 18,
@@ -137,9 +177,13 @@ class _LyricsSheetState extends State<_LyricsSheet> {
                               ),
                               itemCount: lyrics.lines.length,
                               itemBuilder: (context, index) {
+                                while (_lineKeys.length <= index) {
+                                  _lineKeys.add(GlobalKey());
+                                }
                                 final line = lyrics.lines[index];
                                 final isActive = index == active;
                                 return Padding(
+                                  key: _lineKeys[index],
                                   padding:
                                       const EdgeInsets.symmetric(vertical: 6),
                                   child: Text(

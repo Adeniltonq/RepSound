@@ -103,7 +103,7 @@ class LibraryController extends ChangeNotifier {
     }
   }
 
-  /// Varre o MediaStore (inclui cartão SD) e regrava o arquivo de índice.
+  /// Varre o MediaStore do aparelho e regrava o arquivo de índice.
   Future<bool> scan() async {
     if (_isScanning) return false;
     _isScanning = true;
@@ -151,15 +151,13 @@ class LibraryController extends ChangeNotifier {
     if (kIsWeb) return false;
     if (!Platform.isAndroid) return true;
     final audio = await Permission.audio.status;
-    if (audio.isGranted) {
-      _permissionBlocked = false;
-      return true;
-    }
     final storage = await Permission.storage.status;
-    if (storage.isGranted) {
+    if (audio.isGranted && storage.isGranted) {
       _permissionBlocked = false;
       return true;
     }
+    // Pede os dois: áudio no Android 13+ e leitura/escrita no Android 12-.
+    // Isso garante a exclusão via MediaStore também no Android 9.
     final results = await <Permission>[
       Permission.audio,
       Permission.storage,

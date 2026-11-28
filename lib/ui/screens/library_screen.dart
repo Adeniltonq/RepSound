@@ -315,7 +315,7 @@ class LibraryScreenState extends State<LibraryScreen> {
                         ? 'A leitura automática da biblioteca está disponível no Android.'
                         : library.permissionBlocked
                             ? 'O acesso às músicas foi negado. Abra os ajustes do sistema e permita “Música e áudio” para o RepSound.'
-                            : 'Toque em escanear para ler o armazenamento interno e o cartão microSD.',
+                            : 'Toque em escanear para ler o armazenamento do aparelho.',
                     actionLabel: library.isScanning
                         ? 'Escaneando...'
                         : library.permissionBlocked
@@ -534,7 +534,7 @@ class LibraryScreenState extends State<LibraryScreen> {
                           const SizedBox(height: 22),
                           _FilterSectionTitle(
                             title: 'Pasta',
-                            subtitle: 'Armazenamento interno e microSD',
+                            subtitle: 'Armazenamento do aparelho',
                             trailing: '${library.folders.length}',
                           ),
                           const SizedBox(height: 8),

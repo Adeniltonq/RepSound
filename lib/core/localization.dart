@@ -96,7 +96,7 @@ const Map<String, Map<String, String>> _messages = <String, Map<String, String>>
     'home.folders': 'Pastas',
     'home.emptyTitle': 'Sua biblioteca está vazia',
     'home.emptyMessage':
-        'Escaneie o aparelho para encontrar as músicas do armazenamento interno e do cartão microSD.',
+        'Escaneie o aparelho para encontrar as músicas armazenadas nele.',
     'home.scanNow': 'Escanear agora',
     'home.openSettings': 'Abrir ajustes',
     'library.title': 'Biblioteca',
@@ -168,7 +168,7 @@ const Map<String, Map<String, String>> _messages = <String, Map<String, String>>
     'home.folders': 'Folders',
     'home.emptyTitle': 'Your library is empty',
     'home.emptyMessage':
-        'Scan your device to find music on internal storage and the microSD card.',
+        'Scan your device to find the music stored on it.',
     'home.scanNow': 'Scan now',
     'home.openSettings': 'Open settings',
     'library.title': 'Library',
@@ -240,7 +240,7 @@ const Map<String, Map<String, String>> _messages = <String, Map<String, String>>
     'home.folders': 'Carpetas',
     'home.emptyTitle': 'Tu biblioteca está vacía',
     'home.emptyMessage':
-        'Escanea el dispositivo para encontrar música en el almacenamiento interno y en la tarjeta microSD.',
+        'Escanea el dispositivo para encontrar la música almacenada en él.',
     'home.scanNow': 'Escanear ahora',
     'home.openSettings': 'Abrir ajustes',
     'library.title': 'Biblioteca',
@@ -312,7 +312,7 @@ const Map<String, Map<String, String>> _messages = <String, Map<String, String>>
     'home.folders': 'Dossiers',
     'home.emptyTitle': 'Votre bibliothèque est vide',
     'home.emptyMessage':
-        "Analysez l'appareil pour trouver de la musique sur le stockage interne et la carte microSD.",
+        "Analysez l'appareil pour trouver la musique stockée sur celui-ci.",
     'home.scanNow': 'Analyser maintenant',
     'home.openSettings': 'Ouvrir les réglages',
     'library.title': 'Bibliothèque',
@@ -384,7 +384,7 @@ const Map<String, Map<String, String>> _messages = <String, Map<String, String>>
     'home.folders': 'Ordner',
     'home.emptyTitle': 'Deine Bibliothek ist leer',
     'home.emptyMessage':
-        'Scanne das Gerät, um Musik im internen Speicher und auf der microSD-Karte zu finden.',
+        'Scanne das Gerät, um die darauf gespeicherte Musik zu finden.',
     'home.scanNow': 'Jetzt scannen',
     'home.openSettings': 'Einstellungen öffnen',
     'library.title': 'Bibliothek',
@@ -456,7 +456,7 @@ const Map<String, Map<String, String>> _messages = <String, Map<String, String>>
     'home.folders': 'Cartelle',
     'home.emptyTitle': 'La tua libreria è vuota',
     'home.emptyMessage':
-        'Scansiona il dispositivo per trovare musica nella memoria interna e sulla scheda microSD.',
+        'Scansiona il dispositivo per trovare la musica archiviata al suo interno.',
     'home.scanNow': 'Scansiona ora',
     'home.openSettings': 'Apri impostazioni',
     'library.title': 'Libreria',
@@ -528,7 +528,7 @@ const Map<String, Map<String, String>> _messages = <String, Map<String, String>>
     'home.folders': 'Папки',
     'home.emptyTitle': 'Ваша библиотека пуста',
     'home.emptyMessage':
-        'Отсканируйте устройство, чтобы найти музыку во внутренней памяти и на карте microSD.',
+        'Отсканируйте устройство, чтобы найти музыку в его памяти.',
     'home.scanNow': 'Сканировать',
     'home.openSettings': 'Открыть настройки',
     'library.title': 'Библиотека',
@@ -601,7 +601,7 @@ const Map<String, Map<String, String>> _messages = <String, Map<String, String>>
     'home.folders': 'フォルダ',
     'home.emptyTitle': 'ライブラリは空です',
     'home.emptyMessage':
-        '端末をスキャンして、内部ストレージとmicroSDカードの音楽を見つけます。',
+        '端末をスキャンして、端末内に保存された音楽を見つけます。',
     'home.scanNow': '今すぐスキャン',
     'home.openSettings': '設定を開く',
     'library.title': 'ライブラリ',
@@ -672,7 +672,7 @@ const Map<String, Map<String, String>> _messages = <String, Map<String, String>>
     'home.folders': '폴더',
     'home.emptyTitle': '라이브러리가 비어 있습니다',
     'home.emptyMessage':
-        '기기를 스캔하여 내부 저장소와 microSD 카드의 음악을 찾으세요.',
+        '기기를 스캔하여 기기에 저장된 음악을 찾으세요.',
     'home.scanNow': '지금 스캔',
     'home.openSettings': '설정 열기',
     'library.title': '라이브러리',
@@ -743,7 +743,7 @@ const Map<String, Map<String, String>> _messages = <String, Map<String, String>>
     'home.recentlyAdded': '最近添加',
     'home.folders': '文件夹',
     'home.emptyTitle': '音乐库为空',
-    'home.emptyMessage': '扫描设备以查找内部存储和 microSD 卡中的音乐。',
+    'home.emptyMessage': '扫描设备以查找其中存储的音乐。',
     'home.scanNow': '立即扫描',
     'home.openSettings': '打开设置',
     'library.title': '音乐库',
@@ -814,7 +814,7 @@ const Map<String, Map<String, String>> _messages = <String, Map<String, String>>
     'home.folders': 'مجلدات',
     'home.emptyTitle': 'مكتبتك فارغة',
     'home.emptyMessage':
-        'امسح الجهاز للعثور على الموسيقى في التخزين الداخلي وبطاقة microSD.',
+        'امسح الجهاز للعثور على الموسيقى المخزنة عليه.',
     'home.scanNow': 'امسح الآن',
     'home.openSettings': 'افتح الإعدادات',
     'library.title': 'المكتبة',
@@ -885,7 +885,7 @@ const Map<String, Map<String, String>> _messages = <String, Map<String, String>>
     'home.folders': 'फ़ोल्डर',
     'home.emptyTitle': 'आपकी लाइब्रेरी खाली है',
     'home.emptyMessage':
-        'आंतरिक स्टोरेज और microSD कार्ड में संगीत खोजने के लिए डिवाइस स्कैन करें।',
+        'संगीत खोजने के लिए डिवाइस को स्कैन करें।',
     'home.scanNow': 'अभी स्कैन करें',
     'home.openSettings': 'सेटिंग्स खोलें',
     'library.title': 'लाइब्रेरी',
@@ -957,7 +957,7 @@ const Map<String, Map<String, String>> _messages = <String, Map<String, String>>
     'home.folders': 'Folder',
     'home.emptyTitle': 'Pustakamu kosong',
     'home.emptyMessage':
-        'Pindai perangkat untuk menemukan musik di penyimpanan internal dan kartu microSD.',
+        'Pindai perangkat untuk menemukan musik yang tersimpan di dalamnya.',
     'home.scanNow': 'Pindai sekarang',
     'home.openSettings': 'Buka pengaturan',
     'library.title': 'Pustaka',
@@ -1029,7 +1029,7 @@ const Map<String, Map<String, String>> _messages = <String, Map<String, String>>
     'home.folders': 'Klasörler',
     'home.emptyTitle': 'Kitaplığın boş',
     'home.emptyMessage':
-        'Dahili depolama ve microSD karttaki müziği bulmak için cihazı tara.',
+        'Cihazda depolanan müziği bulmak için cihazı tara.',
     'home.scanNow': 'Şimdi tara',
     'home.openSettings': 'Ayarları aç',
     'library.title': 'Kitaplık',
@@ -1100,7 +1100,7 @@ const Map<String, Map<String, String>> _messages = <String, Map<String, String>>
     'home.folders': 'Mappen',
     'home.emptyTitle': 'Je bibliotheek is leeg',
     'home.emptyMessage':
-        'Scan je apparaat om muziek te vinden op interne opslag en de microSD-kaart.',
+        'Scan je apparaat om muziek te vinden die erop is opgeslagen.',
     'home.scanNow': 'Nu scannen',
     'home.openSettings': 'Instellingen openen',
     'library.title': 'Bibliotheek',

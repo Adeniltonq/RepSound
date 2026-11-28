@@ -47,4 +47,44 @@ void main() {
       contains('320 px'),
     );
   });
+
+  test('toque na capa vem ligado com passo de 10 s', () async {
+    final settings = await SettingsController.create();
+    expect(settings.tapToSeek, isTrue);
+    expect(settings.seekStepSeconds, 10);
+  });
+
+  test('passo do toque respeita limites e persiste', () async {
+    final settings = await SettingsController.create();
+    settings.setSeekStepSeconds(1);
+    expect(settings.seekStepSeconds, 5);
+    settings.setSeekStepSeconds(999);
+    expect(settings.seekStepSeconds, 60);
+    settings.setSeekStepSeconds(30);
+    settings.setTapToSeek(false);
+    await Future<void>.delayed(Duration.zero);
+
+    final reloaded = await SettingsController.create();
+    expect(reloaded.seekStepSeconds, 30);
+    expect(reloaded.tapToSeek, isFalse);
+  });
+
+  test('toque e passo entram no backup JSON', () async {
+    final settings = await SettingsController.create();
+    settings.setTapToSeek(false);
+    settings.setSeekStepSeconds(15);
+    final json = settings.toJson();
+    expect(json['tapToSeek'], isFalse);
+    expect(json['seekStepSeconds'], 15);
+
+    SharedPreferences.setMockInitialValues(<String, Object>{});
+    final restored = await SettingsController.create();
+    await restored.applyJson(<String, dynamic>{
+      ...json,
+      'tapToSeek': true,
+      'seekStepSeconds': 5,
+    });
+    expect(restored.tapToSeek, isTrue);
+    expect(restored.seekStepSeconds, 5);
+  });
 }

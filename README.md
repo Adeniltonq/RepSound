@@ -34,6 +34,7 @@ Instale com “instalar de fontes desconhecidas” permitido para o app de arqui
 - A fila sobrevive à troca de telas, ao fechamento do app e ao segundo plano; a restauração não inicia a reprodução sozinha. Limite de segurança em **20.000 faixas** (300 no modo econômico).
 - Mini player com **voltar | play/pause | avançar**.
 - **Swipe na capa** da tela de reprodução: esquerda → próxima, direita → anterior, com animação, limite e vibração. O botão “voltar” reinicia a faixa se ela já passou de 3 s.
+- **Toque na capa**: esquerda retrocede, direita avança (5–60 s, padrão 10 s) e o centro pausa/retoma. Ligável em Ajustes → Reprodução, com aviso animado na tela.
 - Notificação/lock screen com anterior, play/pause, próxima, progresso e botões de fone. Tocar na notificação abre a tela de reprodução.
 - Aleatório e repetição (desligada / tudo / uma faixa).
 - Timer para dormir (minutos ou fim da faixa).
@@ -66,7 +67,7 @@ Instale com “instalar de fontes desconhecidas” permitido para o app de arqui
 - Reproduções, última reprodução, pulos e **percentual médio ouvido** por faixa.
 - Reprodução válida após ~30 s ou ~50% da faixa (o que for menor), usando a duração real.
 - Tela **Estatísticas de escuta** com histórico recente, mais reproduzidas e mais puladas.
-- Letras locais **`.lrc` sincronizado** ou **`.txt`** ao lado do arquivo de áudio, exibidas no próprio player com destaque da linha atual.
+- Letras locais **`.lrc` sincronizado** ou **`.txt`** ao lado do arquivo de áudio, exibidas no próprio player com destaque da linha atual e rolagem automática.
 
 ### Barra inferior personalizável
 - Reordene as 5 abas (**Início, Biblioteca, Navegar, Playlists, Ajustes**) por arrastar.
@@ -79,6 +80,7 @@ Instale com “instalar de fontes desconhecidas” permitido para o app de arqui
 - Modos escuro, claro e sistema.
 - Cores de destaque alternativas.
 - Interface em **pt-BR** por padrão e **15 idiomas** (pt, en, es, fr, de, it, ru, ja, ko, zh, ar, hi, id, tr, nl), minimalista, com cartões arredondados e transições suaves.
+- Layout adaptativo: telas pequenas e DAPs (**480×640**), inclusive Android 9; em larguras muito estreitas a barra inferior fica só com ícones e o player usa controles compactos.
 - Animações podem ser desligadas nos Ajustes (transições de tela instantâneas).
 
 ### Backup e privacidade
@@ -163,7 +165,7 @@ A **qualidade** exibida é estimada: formatos sem perdas são marcados como *Los
 
 - Flutter 3.47+ / Dart 3.13+
 - Android SDK 36, AGP 9.x, JDK 17+ (o projeto usa Java 17 no Gradle)
-- Android 7.0+ (API 24) — a leitura automática da biblioteca é **exclusiva do Android**
+- Android 7.0+ (API 24), incluindo **Android 9 (API 28)** de DAPs; layout adaptado a telas **480×640**.
 
 ---
 
@@ -203,6 +205,7 @@ O projeto compila para iOS, mas a leitura local da biblioteca usa o MediaStore d
 | --- | --- |
 | `READ_MEDIA_AUDIO` (Android 13+) | ler arquivos de áudio |
 | `READ_EXTERNAL_STORAGE` (≤ Android 12) | ler arquivos de áudio |
+| `WRITE_EXTERNAL_STORAGE` (≤ Android 9) | excluir faixas pelo MediaStore |
 | `FOREGROUND_SERVICE` + `FOREGROUND_SERVICE_MEDIA_PLAYBACK` | reprodução em segundo plano |
 | `POST_NOTIFICATIONS` | controles na notificação |
 | `WAKE_LOCK` | manter a reprodução estável com a tela apagada |

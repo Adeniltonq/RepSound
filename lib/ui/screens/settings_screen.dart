@@ -108,6 +108,25 @@ class SettingsScreen extends StatelessWidget {
                   ),
                 ),
               ),
+              SwitchListTile(
+                value: settings.tapToSeek,
+                onChanged: settings.setTapToSeek,
+                secondary: const Icon(Icons.touch_app_rounded),
+                title: const Text('Toque na capa para avançar/retroceder'),
+                subtitle: const Text(
+                  'Esquerda volta, direita avança e o centro pausa/retoma.',
+                ),
+              ),
+              if (settings.tapToSeek)
+                ListTile(
+                  leading: const Icon(Icons.timelapse_rounded),
+                  title: const Text('Passo do toque'),
+                  subtitle: Text(
+                    '${settings.seekStepSeconds} segundos por toque',
+                  ),
+                  trailing: const Icon(Icons.chevron_right_rounded),
+                  onTap: () => _showSeekStepDialog(context, settings),
+                ),
               _SliderTile(
                 title: 'Ignorar faixas curtas',
                 subtitle:
@@ -130,7 +149,7 @@ class SettingsScreen extends StatelessWidget {
                 title: const Text('Atualizar biblioteca'),
                 subtitle: Text(
                   '${library.totalSongs} faixa(s) • '
-                  '${library.isScanning ? 'escaneando...' : 'armazenamento interno e microSD'}',
+                  '${library.isScanning ? 'escaneando...' : 'armazenamento do aparelho'}',
                 ),
                 trailing: library.isScanning
                     ? const SizedBox(
@@ -528,6 +547,41 @@ class SettingsScreen extends StatelessWidget {
         showAppSnack(context, 'Falha ao importar: $error');
       }
     }
+  }
+
+  static Future<void> _showSeekStepDialog(
+    BuildContext context,
+    SettingsController settings,
+  ) async {
+    const options = <int>[5, 10, 15, 30, 60];
+    final selected = await showDialog<int>(
+      context: context,
+      builder: (dialogContext) => SimpleDialog(
+        title: const Text('Passo do toque'),
+        children: <Widget>[
+          for (final seconds in options)
+            SimpleDialogOption(
+              onPressed: () => Navigator.of(dialogContext).pop(seconds),
+              child: Row(
+                children: <Widget>[
+                  Icon(
+                    seconds == settings.seekStepSeconds
+                        ? Icons.radio_button_checked_rounded
+                        : Icons.radio_button_off_rounded,
+                    size: 20,
+                    color: seconds == settings.seekStepSeconds
+                        ? Theme.of(dialogContext).colorScheme.primary
+                        : Theme.of(dialogContext).colorScheme.onSurfaceVariant,
+                  ),
+                  const SizedBox(width: 12),
+                  Text('$seconds segundos'),
+                ],
+              ),
+            ),
+        ],
+      ),
+    );
+    if (selected != null) settings.setSeekStepSeconds(selected);
   }
 
   static Future<void> _showQualityDialog(

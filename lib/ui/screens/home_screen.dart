@@ -172,7 +172,7 @@ class HomeScreen extends StatelessWidget {
                       ? 'A leitura automática da biblioteca está disponível no Android.'
                       : library.permissionBlocked
                           ? 'O acesso às músicas foi negado. Abra os ajustes do sistema e permita “Música e áudio” para o RepSound.'
-                          : 'Escaneie o aparelho para encontrar as músicas do armazenamento interno e do cartão microSD.',
+                          : 'Escaneie o aparelho para encontrar as músicas armazenadas nele.',
                   actionLabel: library.isScanning
                       ? 'Escaneando...'
                       : library.permissionBlocked

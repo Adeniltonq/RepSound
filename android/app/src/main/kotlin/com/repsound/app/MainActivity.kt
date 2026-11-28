@@ -17,8 +17,7 @@ import java.util.concurrent.Executors
 /**
  * Ponte nativa com o MediaStore.
  *
- * A biblioteca é lida por volume externo (armazenamento interno + cartão SD),
- * o que garante suporte real a microSD. O Flutter recebe apenas metadados
+ * A biblioteca é lida pelo MediaStore do aparelho. O Flutter recebe apenas metadados
  * leves; as capas são carregadas sob demanda, uma por vez.
  */
 class MainActivity : AudioServiceActivity() {
@@ -177,7 +176,7 @@ class MainActivity : AudioServiceActivity() {
             try {
                 queryVolume(volume, songs)
             } catch (t: Throwable) {
-                // Um volume pode estar indisponível (SD removido). Segue para o próximo.
+                // Um volume pode estar indisponível (armazenamento removido). Segue para o próximo.
             }
         }
         return songs

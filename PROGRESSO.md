@@ -1,20 +1,20 @@
 # Progresso do RepSound
 
-> Marcador de onde o desenvolvimento parou. Atualizado em 25/11/2026.
+> Marcador de onde o desenvolvimento parou. Atualizado em 28/11/2026.
 
 ## Estado geral
 
 | Item | Status |
 | --- | --- |
-| Código | ✅ Compila (`dart analyze` sem erros) |
-| Testes | ✅ 54 testes passando (`flutter test`) |
-| APK ARM64 | ✅ `build/app/outputs/flutter-apk/app-release.apk` (21,7 MB) |
+| Código | ✅ `dart analyze` sem erros |
+| Testes | ✅ 57 testes passando (`flutter test`) |
+| APK ARM64 | ✅ `build/app/outputs/flutter-apk/app-release.apk` (~21,7 MB) |
 | README + licença | ✅ PolyForm Noncommercial 1.0.0 |
-| Validação no aparelho | ⏳ Pendente — Galaxy M51 saiu do `adb` |
+| Validação no aparelho | ⏳ Pendente — Galaxy M51 fora do `adb` |
 | Screenshots | ⏳ Pendente — precisa do aparelho |
 | GitHub (push + release) | ✅ <https://github.com/Adeniltonq/RepSound/releases/tag/v1.0.0> |
 
-APK publicado: `RepSound-1.0.0-arm64.apk` (20,7 MB, arm64-v8a).
+APK publicado: `RepSound-1.0.0-arm64.apk` (arm64-v8a, Android 7+).
 
 ## Etapas concluídas
 
@@ -37,20 +37,42 @@ APK publicado: `RepSound-1.0.0-arm64.apk` (20,7 MB, arm64-v8a).
 - **Etapa 9 — letras**: `.lrc` sincronizado e `.txt`, painel integrado ao player.
 - 15 idiomas no seletor de Ajustes; tema azul/preto/branco com dark padrão.
 
-## Arquivos-chave desta rodada
+## Rodada 28/11/2026
 
+- **Toque na capa**: esquerda retrocede, direita avança e o centro pausa/retoma.
+  Passo configurável em Ajustes → Reprodução (5/10/15/30/60 s; padrão 10 s),
+  com aviso animado (“+10 s” / “−10 s”) e vibração. Ligável/desligável.
+- **Telas pequenas / DAPs**: layout compacto no player para **480×640**
+  (capa, título, slider, controles e ações menores); em larguras < 340 dp a
+  barra inferior fica só com ícones e os rótulos do player encurtam (EQ, Info).
+- **Android 9 (API 28)**: `minSdk = 24` explícito, `WRITE_EXTERNAL_STORAGE`
+  (≤ API 28) para exclusão via MediaStore e pedido de permissão de áudio +
+  armazenamento em conjunto. `resizeableActivity` e `supports-screens`
+  declaram suporte a telas pequenas.
+- **Letras**: rolagem automática até a linha ativa (com fallback por estimativa
+  quando a linha ainda não foi construída).
+
+## Arquivos-chave
+
+- `lib/ui/screens/now_playing_screen.dart` — swipe, toque para buscar, layout
+  compacto, letras e estatísticas
+- `lib/ui/sheets/lyrics_sheet.dart` — letras sincronizadas com auto-scroll
+- `lib/state/settings_controller.dart` — `tapToSeek`, `seekStepSeconds`,
+  ordem das abas, idioma e persistência
+- `lib/ui/screens/settings_screen.dart` — atalhos, idioma e opções de reprodução
+- `lib/ui/shell.dart` — barra inferior adaptativa
+- `lib/state/library_controller.dart` — permissões Android 9/13+
+- `android/app/src/main/AndroidManifest.xml` — permissões e telas pequenas
+- `android/app/build.gradle.kts` — `minSdk 24`
 - `lib/ui/screens/mix_screen.dart` — Mix Favoritas/Descobertas
 - `lib/ui/screens/daily_screen.dart` — Daily + estilos + auto update
 - `lib/ui/screens/styles_screen.dart` — CRUD e playlist por estilo
 - `lib/ui/screens/listening_stats_screen.dart` — histórico/estatísticas
 - `lib/ui/screens/customize_bar_screen.dart` — barra inferior
 - `lib/ui/sheets/style_sheets.dart` — editor, aplicação em lote e playlist em lote
-- `lib/ui/sheets/lyrics_sheet.dart` — letras sincronizadas
 - `lib/ui/widgets/song_list_view.dart` — seleção múltipla + barra de ações
 - `lib/ui/widgets/song_tile.dart` — estados de seleção nas 3 visualizações
-- `lib/ui/screens/now_playing_screen.dart` — swipe, letras e estatísticas
 - `lib/ui/widgets/mini_player.dart` — botão anterior
-- `lib/ui/screens/settings_screen.dart` — atalhos e idioma
 
 ## Onde parou / o que falta
 
@@ -59,11 +81,12 @@ APK publicado: `RepSound-1.0.0-arm64.apk` (20,7 MB, arm64-v8a).
    adb devices
    adb install -r build/app/outputs/flutter-apk/app-release.apk
    ```
-   Testar: exclusão pelo MediaStore (Android 12 usa exclusão direta), notificação
-   abrindo a reprodução, swipe na capa, seleção múltipla em grade/compacta,
-   geração da Daily e letras `.lrc`.
-2. **Screenshots** para o README (Home, Reprodução, Seleção, Daily, Estatísticas).
-3. Se o aparelho for reconectado, gerar e anexar capturas no release.
+   Testar: exclusão pelo MediaStore, notificação abrindo a reprodução, swipe e
+   toque na capa, seleção múltipla em grade/compacta, Daily e letras `.lrc`.
+2. **Testar em DAP Android 9 / 480×640** (ou emulador API 28 com 480×640):
+   verificar se nada corta no player, Ajustes e barra inferior.
+3. **Screenshots** para o README (Home, Reprodução, Seleção, Daily, Estatísticas).
+4. Se o aparelho for reconectado, gerar e anexar capturas no release.
 
 ## Comandos úteis
 
@@ -73,13 +96,19 @@ flutter test
 flutter build apk --release --target-platform android-arm64
 ```
 
+Emulador de tela pequena (se o SDK tiver a imagem API 28):
+
+```bash
+avdmanager create avd -n dap28 -k "system-images;android-28;default;arm64-v8a"
+emulator -avd dap28 -skin 480x640
+```
+
 Assinatura: `android/key.properties` + `android/app/repsound-release.jks`
 (ambos fora do git). Token do GitHub **não** fica no repositório.
 
 ## Pendências conhecidas de UX (não bloqueiam)
 
 - A barra de seleção usa ícones compactos; em telas muito estreitas ela rola
-  horizontalmente.
-- O auto-scroll das letras ainda não acompanha a linha ativa (destaque sim).
+  horizontalmente (comportamento esperado).
 - A Daily pode ser regenerada ao trocar estilos mesmo com auto-update desligado;
   é uma ação manual explícita.

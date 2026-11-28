@@ -40,6 +40,8 @@ class SettingsController extends ChangeNotifier {
   static const _kLocale = 'rs_locale';
   static const _kTabOrder = 'rs_tab_order';
   static const _kInitialTab = 'rs_initial_tab';
+  static const _kTapToSeek = 'rs_tap_seek';
+  static const _kSeekStep = 'rs_seek_step';
 
   ThemeMode _themeMode = ThemeMode.dark;
   int _accentIndex = 0;
@@ -62,6 +64,8 @@ class SettingsController extends ChangeNotifier {
   String _localeCode = 'pt';
   List<AppTab> _tabOrder = List<AppTab>.of(defaultTabOrder);
   AppTab _initialTab = AppTab.home;
+  bool _tapToSeek = true;
+  int _seekStepSec = 10;
 
   ThemeMode get themeMode => _themeMode;
   String get localeCode => _localeCode;
@@ -94,6 +98,10 @@ class SettingsController extends ChangeNotifier {
   String get repeatMode => _repeatMode;
   List<AppTab> get tabOrder => List<AppTab>.unmodifiable(_tabOrder);
   AppTab get initialTab => _initialTab;
+
+  /// Toque na capa: esquerda retrocede, direita avança, centro pausa/retoma.
+  bool get tapToSeek => _tapToSeek;
+  int get seekStepSeconds => _seekStepSec;
   int get initialTabIndex {
     final index = _tabOrder.indexOf(_initialTab);
     return index < 0 ? 0 : index;
@@ -139,6 +147,8 @@ class SettingsController extends ChangeNotifier {
     _initialTab =
         appTabFromName(_prefs.getString(_kInitialTab)) ?? AppTab.home;
     if (!_tabOrder.contains(_initialTab)) _initialTab = _tabOrder.first;
+    _tapToSeek = _prefs.getBool(_kTapToSeek) ?? true;
+    _seekStepSec = (_prefs.getInt(_kSeekStep) ?? 10).clamp(5, 60).toInt();
   }
 
   static List<AppTab> _decodeTabOrder(List<String>? raw) {
@@ -333,6 +343,21 @@ class SettingsController extends ChangeNotifier {
     notifyListeners();
   }
 
+  void setTapToSeek(bool value) {
+    if (_tapToSeek == value) return;
+    _tapToSeek = value;
+    _prefs.setBool(_kTapToSeek, value);
+    notifyListeners();
+  }
+
+  void setSeekStepSeconds(int value) {
+    final clamped = value.clamp(5, 60).toInt();
+    if (_seekStepSec == clamped) return;
+    _seekStepSec = clamped;
+    _prefs.setInt(_kSeekStep, clamped);
+    notifyListeners();
+  }
+
   Map<String, dynamic> toJson() => <String, dynamic>{
         'theme': _themeMode.name,
         'accentIndex': _accentIndex,
@@ -352,6 +377,8 @@ class SettingsController extends ChangeNotifier {
         'repeatMode': _repeatMode,
         'tabOrder': _tabOrder.map((tab) => tab.name).toList(),
         'initialTab': _initialTab.name,
+        'tapToSeek': _tapToSeek,
+        'seekStepSeconds': _seekStepSec,
       };
 
   Future<void> applyJson(Map<String, dynamic> json) async {
@@ -463,6 +490,16 @@ class SettingsController extends ChangeNotifier {
         _initialTab = tab;
         await _prefs.setString(_kInitialTab, tab.name);
       }
+    }
+    final tapToSeek = json['tapToSeek'];
+    if (tapToSeek is bool) {
+      _tapToSeek = tapToSeek;
+      await _prefs.setBool(_kTapToSeek, tapToSeek);
+    }
+    final seekStep = json['seekStepSeconds'];
+    if (seekStep is num) {
+      _seekStepSec = seekStep.toInt().clamp(5, 60).toInt();
+      await _prefs.setInt(_kSeekStep, _seekStepSec);
     }
     notifyListeners();
   }

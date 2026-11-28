@@ -103,6 +103,7 @@ class _ShellState extends State<Shell> with WidgetsBindingObserver {
     final settings = context.watch<SettingsController>();
     final animations = settings.animations;
     final order = settings.tabOrder;
+    final narrow = MediaQuery.sizeOf(context).width < 340;
     if (!order.contains(_currentTab)) {
       _currentTab = order.first;
     }
@@ -152,6 +153,10 @@ class _ShellState extends State<Shell> with WidgetsBindingObserver {
                   ),
                   NavigationBar(
                     selectedIndex: index < 0 ? 0 : index,
+                    height: narrow ? 62 : null,
+                    labelBehavior: narrow
+                        ? NavigationDestinationLabelBehavior.alwaysHide
+                        : NavigationDestinationLabelBehavior.alwaysShow,
                     onDestinationSelected: (value) {
                       if (value >= 0 && value < order.length) {
                         _goToTab(order[value]);
