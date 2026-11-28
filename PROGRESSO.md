@@ -7,7 +7,7 @@
 | Item | Status |
 | --- | --- |
 | Código | ✅ `dart analyze` sem erros |
-| Testes | ✅ 57 testes passando (`flutter test`) |
+| Testes | ✅ 59 testes passando (`flutter test`) |
 | APK ARM64 | ✅ `build/app/outputs/flutter-apk/app-release.apk` (~21,7 MB) |
 | README + licença | ✅ PolyForm Noncommercial 1.0.0 |
 | Validação no aparelho | ⏳ Pendente — Galaxy M51 fora do `adb` |

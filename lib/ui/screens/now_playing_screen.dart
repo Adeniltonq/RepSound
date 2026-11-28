@@ -50,9 +50,11 @@ class _NowPlayingScreenState extends State<NowPlayingScreen> {
         player.currentSong?.durationMs ??
         0;
     if (durationMs <= 0) return;
-    final target = (player.player.position.inMilliseconds + seconds * 1000)
-        .clamp(0, durationMs)
-        .toInt();
+    final target = seekTargetMs(
+      player.player.position.inMilliseconds,
+      seconds,
+      durationMs,
+    );
     if (target == player.player.position.inMilliseconds) return;
     player.seek(Duration(milliseconds: target));
     HapticFeedback.selectionClick();
@@ -76,11 +78,11 @@ class _NowPlayingScreenState extends State<NowPlayingScreen> {
     double size,
     PlayerController player,
   ) {
-    final dx = details.localPosition.dx;
     final step = context.read<SettingsController>().seekStepSeconds;
-    if (dx < size * 0.38) {
+    final action = seekTapAction(details.localPosition.dx, size);
+    if (action == SeekTapAction.rewind) {
       _seekBy(player, -step);
-    } else if (dx > size * 0.62) {
+    } else if (action == SeekTapAction.forward) {
       _seekBy(player, step);
     } else {
       player.togglePlayPause();

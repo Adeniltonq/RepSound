@@ -66,4 +66,22 @@ void main() {
       expect(sanitizeFileName(''), 'repsound');
     });
   });
+
+  group('toque na capa', () {
+    test('divide em esquerda, centro e direita', () {
+      expect(seekTapAction(10, 100), SeekTapAction.rewind);
+      expect(seekTapAction(50, 100), SeekTapAction.togglePlay);
+      expect(seekTapAction(90, 100), SeekTapAction.forward);
+      expect(seekTapAction(38, 100), SeekTapAction.togglePlay);
+      expect(seekTapAction(62, 100), SeekTapAction.togglePlay);
+      expect(seekTapAction(10, 0), SeekTapAction.togglePlay);
+    });
+
+    test('avanço e retrocesso ficam presos na faixa', () {
+      expect(seekTargetMs(5000, 10, 60000), 15000);
+      expect(seekTargetMs(5000, -10, 60000), 0);
+      expect(seekTargetMs(55000, 10, 60000), 60000);
+      expect(seekTargetMs(5000, 10, 0), 5000);
+    });
+  });
 }

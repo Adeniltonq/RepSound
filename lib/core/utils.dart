@@ -129,6 +129,26 @@ String sanitizeFileName(String value) {
   return clean.isEmpty ? 'repsound' : clean;
 }
 
+/// Ação disparada por um toque na capa do player.
+enum SeekTapAction { rewind, togglePlay, forward }
+
+/// Divide a capa em três zonas: esquerda (voltar), centro (play/pause) e
+/// direita (avançar). As bordas de 38% foram escolhidas para funcionar bem
+/// também em telas pequenas de DAPs.
+SeekTapAction seekTapAction(double dx, double width) {
+  if (width <= 0) return SeekTapAction.togglePlay;
+  final ratio = (dx / width).clamp(0.0, 1.0);
+  if (ratio < 0.38) return SeekTapAction.rewind;
+  if (ratio > 0.62) return SeekTapAction.forward;
+  return SeekTapAction.togglePlay;
+}
+
+/// Posição final de um avanço/retrocesso, presa entre 0 e a duração.
+int seekTargetMs(int positionMs, int deltaSeconds, int durationMs) {
+  if (durationMs <= 0) return positionMs;
+  return (positionMs + deltaSeconds * 1000).clamp(0, durationMs).toInt();
+}
+
 /// Evita disparar buscas a cada tecla.
 class Debouncer {
   Debouncer({this.delay = const Duration(milliseconds: 220)});
